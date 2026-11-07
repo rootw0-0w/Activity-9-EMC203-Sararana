@@ -8,7 +8,7 @@ public class CollisionManager : MonoBehaviour
     private static CollisionManager instance;
 
     public List<Player> colliders = new List<Player>();
-    private List<EnemyCollider1> enemies = new List<EnemyCollider1>();
+    public List<EnemyCollider1> enemies = new List<EnemyCollider1>();
 
     private void Awake()
     {

@@ -1,65 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 public class ItemSpawner : MonoBehaviour
 {
     public Item itemToSpawn;
-    public float speed = 0.01f;
-    public List<Item> items = new List<Item>();
     public Transform parent;
-    public float maxHorizontal;
-    public float minHorizontal;
-    public float maxVertical;
-    public float minVertical;
+    public float laneDistance = 3f;
+
+    [Header("Timing")]
+    public float startDelay = 1f;
+    public float interval   = 0.6f;
+
+    public List<Item> items = new List<Item>();
 
     private void Start()
     {
-        InvokeRepeating(nameof(BeginSpawn), 1, 0.3f);
+        InvokeRepeating(nameof(BeginSpawn), startDelay, interval);
     }
 
     private void BeginSpawn()
     {
-        var spawnedItem = Instantiate(itemToSpawn, parent);
-        spawnedItem.enemyPosition = GetRandomLocation();
-        items.Add(spawnedItem);
-    }
+        if (itemToSpawn == null) return;
 
-    private Vector3 GetRandomLocation()
-    {
-        var xRand = Random.Range(minHorizontal, maxHorizontal);
-        var yRand = Random.Range(minVertical, maxVertical);
-        return new Vector3(xRand, yRand, 0);
+        var spawned = Instantiate(itemToSpawn, parent);
+        
+        int lane = Random.Range(0, 3);
+        float targetX = (lane - 1) * laneDistance;
+        float targetY = -3f; // matches player
+        
+        spawned.Setup(new Vector2(targetX, targetY));
+        items.Add(spawned);
     }
 
     private void Update()
     {
-        foreach (var item in items)
+        for (int i = items.Count - 1; i >= 0; i--)
         {
-            ItemMover(item);
-        }
-
-
-        transform.position = GetRandomLocation();
-        List<Transform> children = new List<Transform>();
-        foreach(Transform child in transform)
-        {
-            children.Add(child);
-        }       
-        children.OrderBy(x => x.position.z);
-        
-        for(int i = 0 ; i < children.Count; i++)
-        {
-            children[i].SetSiblingIndex(i);
+            if (items[i] == null) items.RemoveAt(i);
         }
     }
-
-    private void ItemMover(Item item)
-    {
-        item.enemyPosition.z += speed;
-    }
-
-
 }

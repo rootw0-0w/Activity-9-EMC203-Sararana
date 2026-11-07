@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class Camera: MonoBehaviour
+public class Scale: MonoBehaviour
 {
-    public static float focalLenth= 300f;
-    // Start is called before the first frame update
+    public static float focalLength= 300f;
     public Vector2 vanishingPoint = Vector2.zero;
 }

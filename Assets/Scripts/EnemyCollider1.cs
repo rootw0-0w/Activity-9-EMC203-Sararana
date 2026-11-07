@@ -1,11 +1,12 @@
-using System;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
+ using UnityEngine;
+
 
 public class EnemyCollider1 : MonoBehaviour
 {
     [SerializeField] private float _length;
     [SerializeField] private float _width;
+
+    public Item enemy;
 
     public Vector2 max { get; private set; }
     public Vector2 min { get; private set; }
@@ -24,6 +25,11 @@ public class EnemyCollider1 : MonoBehaviour
         {
             CollisionManager.Instance.UnregisterEnemy(this);
         }
+    }
+
+    private void Awake()
+    {
+        enemy = GetComponent<Item>();
     }
 
 
