@@ -75,15 +75,15 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             currentLane = Mathf.Max(0, currentLane - 1);
-            laneFlashTimer = 0.2f; // Flash for 0.2 seconds
-            flashLane = -1;        // -1 means show left sprite
+            laneFlashTimer = 0.2f; 
+            flashLane = -1;        
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentLane = Mathf.Min(2, currentLane + 1);
-            laneFlashTimer = 0.2f; // Flash for 0.2 seconds
-            flashLane = 1;         // 1 means show right sprite
+            laneFlashTimer = 0.2f; 
+            flashLane = 1;         
         }
 
         targetX = (currentLane - 1) * laneDistance;
@@ -101,11 +101,11 @@ public class Player : MonoBehaviour
         if (jumpTimer > 0f)
         {
             jumpTimer -= Time.deltaTime;
-            jumpTimer = Mathf.Max(0f, jumpTimer); // Stops the landing twitch
+            jumpTimer = Mathf.Max(0f, jumpTimer); // stops landing twitch
             
             float t = 1f - (jumpTimer / jumpDuration); // t goes from 0 to 1
             
-            // The one-line math sin arc:
+            // math sin arc:
             y = groundY + Mathf.Sin(t * Mathf.PI) * jumpHeight;
         }
 
@@ -116,15 +116,15 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.sprite = hitSprite;
         }
-        else if (jumpTimer > 0f) // If in the air, show jump sprite
+        else if (jumpTimer > 0f) 
         {
             spriteRenderer.sprite = jumpSprite;
         }
-        else if (laneFlashTimer > 0f) // If we just moved, show the move sprite
+        else if (laneFlashTimer > 0f) 
         {
             spriteRenderer.sprite = (flashLane == -1) ? leftSprite : rightSprite;
         }
-        else // Otherwise, show the normal sprite for the current lane
+        else 
         {
             if (currentLane == 0) spriteRenderer.sprite = leftSprite;
             else if (currentLane == 2) spriteRenderer.sprite = rightSprite;
