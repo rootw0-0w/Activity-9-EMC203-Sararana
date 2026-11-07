@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
         if (invincibilityTimer > 0f) return; //survivability because it will touch player
         
         currentHealth -= amount;
-        invincibilityTimer = 0.5f;
+        invincibilityTimer = 1f;
         hitFlashTimer = 0.2f;
 
         if (currentHealth < 0f) currentHealth = 0f;
